@@ -13,10 +13,14 @@ sum = Additive
 product :: forall a. a -> Multiplicative a
 product = Multiplicative
 
-main :: Effect Unit
-main = do
+test_optional_monad :: Effect Unit
+test_optional_monad = do
   assert (Only (sum 1)     `append` Only (sum 1)     == Only (sum 2))
   assert (Only (product 4) `append` Only (product 2) == Only (product 8))
   assert (Only (sum 1)     `append` Nada             == Only (sum 1))
   assert (Only [1]         `append` Nada             == Only [1])
   assert (Nada             `append` Only (sum 1)     == Only (sum 1))
+
+main :: Effect Unit
+main = do
+  test_optional_monad
